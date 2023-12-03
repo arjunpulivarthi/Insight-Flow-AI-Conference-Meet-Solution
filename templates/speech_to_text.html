@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Speech-to-Text</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #111;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+        }
+
+        header, footer {
+            padding: 10px;
+            background: #333;
+            text-align: center;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .recording-pane {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        h2 {
+            color: #00bfff;
+        }
+
+        /* Add more styling for a futuristic look */
+        .recording-pane p {
+            margin: 20px 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .recording-button {
+            background-color: #00bfff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .recording-button:hover {
+            background-color: #0080ff;
+            transform: scale(1.05);
+        }
+
+        #resultContainer {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1em;
+            margin: 1em;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+
+        textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.5em;
+            margin-top: 0.5em;
+            box-sizing: border-box; /* To include padding and border in width */
+        }
+
+        a {
+            display: block;
+            margin-top: 1em;
+            text-decoration: none;
+            background-color: #333;
+            color: white;
+            padding: 0.5em 1em;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Demo Speech-to-Text</h1>
+    </header>
+
+    <main>
+        <div class="recording-pane">
+            <h2>Record Your Voice</h2>
+            <p>Record your voice and experience our advanced speech-to-text conversion technology.</p>
+            <button class="recording-button" id="convertButton">Start Recording</button>
+        </div>
+
+        <div id="resultContainer">
+            <label for="resultText">Converted Text:</label>
+            <textarea id="resultText" rows="4" cols="50" readonly></textarea>
+            <!-- End Meeting link -->
+            <a href="/end_meeting" id="endMeetingLink">End Demo</a>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const convertButton = document.getElementById('convertButton');
+            const resultContainer = document.getElementById('resultContainer');
+            const resultText = document.getElementById('resultText');
+            const endMeetingLink = document.getElementById('endMeetingLink');
+
+            convertButton.addEventListener('click', function () {
+                startSpeechRecognition();
+            });
+
+            function startSpeechRecognition() {
+                const recognition = new webkitSpeechRecognition() || SpeechRecognition();
+                recognition.lang = 'en-US';
+                recognition.interimResults = true;
+
+                recognition.onresult = function (event) {
+                    const result = event.results[event.results.length - 1][0].transcript;
+                    resultText.value = result;
+
+                    // Show the result container
+                    resultContainer.style.display = 'block';
+
+                    // Show the End Meeting link
+                    endMeetingLink.style.display = 'block';
+
+                    // Send the converted text to Python server
+                    sendTextDataToPython(result);
+                };
+
+                recognition.onend = function () {
+                    // Additional logic after recognition ends
+                };
+
+                recognition.start();
+            }
+
+            function sendTextDataToPython(textData) {
+                fetch('/process_text', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ textData }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Server response:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

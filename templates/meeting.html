@@ -1,0 +1,204 @@
+<!-- meeting.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight Flow - Meeting</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #111;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        header, footer {
+            padding: 10px;
+            background: #333;
+            text-align: center;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .participant {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            width: 250px;
+            padding: 20px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .participant:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .video {
+            width: 100%;
+            height: 150px;
+            background: #222;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .control-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .control-button img {
+            width: 40px;
+            height: auto;
+        }
+
+        .control-button:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            margin-top: auto;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Insight Flow - Meeting</h1>
+    </header>
+
+    <main>
+        <!-- Participant 1 -->
+        <div class="participant">
+            <h3>Participant 1</h3>
+            <div class="video"></div>
+            <div class="controls">
+                <button class="control-button" onclick="toggleVideo('video1')">
+                    <img src="{{ url_for('serve_icon', filename='video.png') }}" alt="Video">
+                </button>
+                <button class="control-button" onclick="toggleMute('mute1')">
+                    <img src="{{ url_for('serve_icon', filename='mute.png') }}" alt="Mute">
+                </button>
+            </div>
+        </div>
+
+        <!-- Participant 2 -->
+        <div class="participant">
+            <h3>Participant 2</h3>
+            <div class="video"></div>
+            <div class="controls">
+                <button class="control-button" onclick="toggleVideo('video2')">
+                    <img src="icons/video.png" alt="Video">
+                </button>
+                <button class="control-button" onclick="toggleMute('mute2')">
+                    <img src="icons/mute.png" alt="Mute">
+                </button>
+            </div>
+        </div>
+
+        <!-- Participant 3 -->
+        <div class="participant">
+            <h3>Participant 3</h3>
+            <div class="video"></div>
+            <div class="controls">
+                <button class="control-button" onclick="toggleVideo('video3')">
+                    <img src="icons/video.png" alt="Video">
+                </button>
+                <button class="control-button" onclick="toggleMute('mute3')">
+                    <img src="icons/mute.png" alt="Mute">
+                </button>
+            </div>
+        </div>
+
+        <!-- Participant 4 -->
+        <div class="participant">
+            <h3>Participant 4</h3>
+            <div class="video"></div>
+            <div class="controls">
+                <button class="control-button" onclick="toggleVideo('video4')">
+                    <img src="icons/video.png" alt="Video">
+                </button>
+                <button class="control-button" onclick="toggleMute('mute4')">
+                    <img src="icons/mute.png" alt="Mute">
+                </button>
+            </div>
+        </div>
+
+        <!-- Participant 5 -->
+        <div class="participant">
+            <h3>Participant 5</h3>
+            <div class="video"></div>
+            <div class="controls">
+                <button class="control-button" onclick="toggleVideo('video5')">
+                    <img src="icons/video.png" alt="Video">
+                </button>
+                <button class="control-button" onclick="toggleMute('mute5')">
+                    <img src="icons/mute.png" alt="Mute">
+                </button>
+            </div>
+        </div>
+
+        <!-- Participant 6 -->
+        <div class="participant">
+            <h3>Participant 6</h3>
+            <div class="video"></div>
+            <div class="controls">
+                <button class="control-button" onclick="toggleVideo('video6')">
+                    <img src="icons/video.png" alt="Video">
+                </button>
+                <button class="control-button" onclick="toggleMute('mute6')">
+                    <img src="icons/mute.png" alt="Mute">
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Insight Flow App. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleVideo(videoId) {
+            // Implement video toggle logic here
+        }
+
+        function toggleMute(muteId) {
+            // Implement mute toggle logic here
+        }
+    </script>
+</body>
+
+</html>

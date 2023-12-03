@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight Flow</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #111;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+        }
+
+        header, footer {
+            padding: 10px;
+            background: #333;
+            text-align: center;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .meeting-pane,
+        .recording-pane,
+        .chart-pane {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        h2 {
+            color: #00bfff;
+        }
+
+        /* Add more styling for a futuristic look */
+        .meeting-pane p,
+        .recording-pane p,
+        .chart-pane p {
+            margin: 20px 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .meeting-button,
+        .recording-button,
+        .chart-button {
+            background-color: #00bfff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .meeting-button:hover,
+        .recording-button:hover,
+        .chart-button:hover {
+            background-color: #0080ff;
+            transform: scale(1.05);
+        }
+
+        canvas {
+            margin-top: 20px;
+            width: 100%; /* Set chart width to 100% */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Insight Flow</h1>
+    </header>
+
+    <main>
+        <div class="meeting-pane">
+            <h2>Virtual Meeting</h2>
+            <p>Welcome to our futuristic virtual meeting space. Connect with others and explore the future together.</p>
+            <a href="{{ url_for('meeting') }}" class="meeting-button">Start a Meeting</a>
+        </div>
+
+        <div class="recording-pane">
+            <h2>Record Your Voice</h2>
+            <p>Record your voice and experience our advanced speech-to-text conversion technology.</p>
+            <a href="{{ url_for('speech_to_text') }}" class="recording-button">Start Recording</a>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-pane">
+            <h2>Thinking Hats Chart</h2>
+            <canvas id="thinkingHatsChart" height="200"></canvas>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Insight Flow App. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Use the data received from Flask to generate chart
+            var chartData = {
+                labels: [{% for person, _ in person_hat_colors.items() %}"{{ person }}", {% endfor %}],
+                datasets: [{
+                    label: 'Thinking Hats',
+                    data: [{% for _, value in person_chart_data.items() %}{{ value }}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 159, 64, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            // Chart configuration
+            var chartConfig = {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+
+            // Create the chart
+            var myChart = new Chart(document.getElementById('thinkingHatsChart'), chartConfig);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight Flow Login</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: url('your-background-image.jpg'); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #111; /* Dark background color */
+        }
+
+        header, footer {
+            padding: 10px;
+            background: #333; /* Same color as the dashboard */
+            width: 100%;
+            text-align: center;
+        }
+
+        form {
+            background-color: rgba(44, 44, 44, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-out; /* Add fadeIn animation */
+            margin-top: 20px; /* Adjusted margin for better alignment */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            color: #00bfff;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            box-sizing: border-box;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #00bfff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0080ff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Insight Flow</h1>
+    </header>
+
+    <form method="post" action="{{ url_for('dashboard') }}">
+        <h2>Login</h2>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="submit" value="Login">
+    </form>
+
+    <footer>
+        <p>&copy; 2023 Insight Flow. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // You can add JavaScript for additional functionality here
+    </script>
+</body>
+</html>
